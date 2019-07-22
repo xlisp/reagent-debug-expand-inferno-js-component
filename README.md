@@ -171,6 +171,39 @@
 
 (r/render [monitor top-component] (.getElementById js/document "app"))
 ```
+* reagent.interop
+```clojure
+(defn full-component-name [this]
+  (when-some [elem (some-> (or (some-> this
+                                       (.' :_reactInternalInstance))
+                               this)
+                           (.' :_currentElement))]
+    (let [name (some-> (.' elem :type)
+                       (.' :displayName))]
+      (if-some [pname (full-component-name (.' elem :_owner))]
+        (str pname " > " name)
+        name))))
+(given require [reagent.interop :refer-macros [.' .!]]).
+(reagent/current-component) (in place of this)
+```
+* component path
+```clojure
+(defn component-path [c]
+  (let [elem (some-> (or (some-> c
+                                 (.' :_reactInternalInstance))
+                          c)
+                     (.' :_currentElement))
+        name (some-> elem
+                     (.' :type)
+                     (.' :displayName)
+                     (clojure.string/replace #"\$" "."))
+        path (some-> elem
+                     (.' :_owner)
+                     component-path
+                     (str " > "))]
+    (str path name)))
+(component-path (reagent/current-component))
+```
 ### Google 关键词
 * Reagent debug component
 * expand reagent to jsx
