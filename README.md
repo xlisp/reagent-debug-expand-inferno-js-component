@@ -44,8 +44,21 @@
     [:li "Smith"]
     [:li "Taylor"]]])
 ```
+* 调用React组件例子: Reactable.Table
+```clojure
+(def reactable-table (r/adapt-react-class js/Reactable.Table))
+
+(defn example []
+  [:div
+  [reactable-table
+    {:data (clj->js [
+                 {:name "Foo" :section 51}
+                 {:name "Bar" :section 51}])}]])
+```
 ### Google 关键词
 * Reagent debug component
+* expand reagent to jsx
+* Reagent use other component
 
 ### 参考链接
 * https://purelyfunctional.tv/guide/reagent
@@ -57,9 +70,15 @@
 ### Reagent如何调用React的组件?
 * https://github.com/Day8/re-frame/blob/master/docs/Using-Stateful-JS-Components.md
 * https://presumably.de/reagent-mysteries-part-4-children-and-other-props.html
+* [Reagent User Manual](https://gist.github.com/jmlsf/17c588deb326e538dcea6847bc66db9b)
+* http://reagent-project.github.io/docs/master/InteropWithReact.html
+* https://stackoverflow.com/questions/36981538/how-to-prepare-a-react-js-component-for-usage-in-clojurescript-as-an-external-re
 
 ### React如何调用Reagent的组件?
 * nil
+
+### 创建自己的component
+* https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components#the-three-ways
 
 ### 相关的库和代码例子
 * https://github.com/DaveWM/reagent-material-ui [库](material-ui "0.19.0-0",两年没有更新了,只有一个宏)
